@@ -3,4 +3,4 @@ github conflict test
 //锟斤拷锟斤拷锟角凤拷锟斤拷锟斤拷峤�
 //overwrite to conflict
 
-my engdish is wary goot��
+my engdish is wary good��
