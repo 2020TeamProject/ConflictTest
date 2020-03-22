@@ -3,4 +3,4 @@ github conflict test
 //锟斤拷锟斤拷锟角凤拷锟斤拷锟斤拷峤�
 //take no prisoners
 
-cdz has changed it
+my engdish is wary goot
