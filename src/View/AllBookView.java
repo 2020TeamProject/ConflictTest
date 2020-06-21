@@ -28,6 +28,7 @@ import javafx.util.Callback;
 interface AllBookViewInterface
 {
 	void addNoteToBook(Note note, String noteBookChoosed);
+	void removeDoneRemindItem();
 	void removeNoteFromBook(int id, String noteBookChoosed);
 	void setCurrentNoteListener(View Listlistener);
 	ArrayList<String> getUserNoteBookNames();
@@ -145,17 +146,20 @@ public class AllBookView extends View implements AllBookViewInterface
 		}
 	}
 	
-	private void removeDoneRemindItem()
+	@Override
+	public void removeDoneRemindItem()
 	{
 		for (Remind item : remindList.getItems())
 		{
 			if (item.ifDone())
 			{
-				addNoteToBook(item.getNote(), item.getBookName());
 				removeNoteFromBook(item.getNote().getId(), item.getBookName());
+				addNoteToBook(item.getNote(), item.getBookName());
+				return;
 			}
 		}
 	}
+
 
 	@Override
 	public void addNoteToBook(Note note, String noteBookName)
@@ -277,4 +281,5 @@ public class AllBookView extends View implements AllBookViewInterface
 		model.addPropertyChangeListener(this);
 		((UserController)controller).setCurrentUser(model);
 	}
+	
 }
