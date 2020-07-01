@@ -53,6 +53,18 @@ public class AllBookView extends View implements AllBookViewInterface
 		model.initialize();
 		controller = new UserController(model, this);
 		model.addPropertyChangeListener(this);  
+	}
+	
+	@Override
+	public void setCurrentUser(User currentUser)
+	{
+		if (model == currentUser)
+			return;
+		
+		model.removePropertyChangeListener(this);
+		model = currentUser;
+		model.addPropertyChangeListener(this);
+		((UserController)controller).setCurrentUser(model);
 		
 		initRemindList();
 		initListChooser();
@@ -139,7 +151,6 @@ public class AllBookView extends View implements AllBookViewInterface
 			notifyListButton.setText(chooseHelper);
 			
 			// remindList深删除已打勾的事项
-			removeDoneRemindItem();
 			break;
 		default:
 			break;
@@ -159,7 +170,6 @@ public class AllBookView extends View implements AllBookViewInterface
 			}
 		}
 	}
-
 
 	@Override
 	public void addNoteToBook(Note note, String noteBookName)
@@ -189,11 +199,11 @@ public class AllBookView extends View implements AllBookViewInterface
 	
 	private void addToRemind(Note note, String noteBookName)
 	{
-		if (null == note.getAlert())
-			return;
-		
 		if (null == findRemindById(note.getId(), noteBookName))
 		{
+			if (null == note.getAlert())
+				return;
+			
 			remindList.getItems().add(new Remind(note, noteBookName));
 		}
 		else
@@ -269,17 +279,4 @@ public class AllBookView extends View implements AllBookViewInterface
 	{
 		((UserController)controller).setNoteBookNameListener(listener);
 	}
-
-	@Override
-	public void setCurrentUser(User currentUser)
-	{
-		if (model == currentUser)
-			return;
-		
-		model.removePropertyChangeListener(this);
-		model = currentUser;
-		model.addPropertyChangeListener(this);
-		((UserController)controller).setCurrentUser(model);
-	}
-	
 }
